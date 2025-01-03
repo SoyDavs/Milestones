@@ -9,10 +9,13 @@ use pocketmine\scheduler\ClosureTask;
 use pocketmine\utils\Config;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 use pocketmine\player\Player;
+use pocketmine\command\ConsoleCommandSender;
+use pocketmine\console\ConsoleCommandSender as CommandSender;
 
 class Main extends PluginBase {
     private Config $config;
     private array $milestones = [];
+    private array $completedMilestones = [];
     
     protected function onEnable(): void {
         $this->saveDefaultConfig();
@@ -32,15 +35,21 @@ class Main extends PluginBase {
     }
 
     private function checkMilestone(Player $player): void {
+        $playerName = $player->getName();
+        if (!isset($this->completedMilestones[$playerName])) {
+            $this->completedMilestones[$playerName] = [];
+        }
+
         BedrockEconomyAPI::CLOSURE()->get(
             xuid: $player->getXuid(),
-            username: $player->getName(),
-            onSuccess: function(array $result) use ($player): void {
+            username: $playerName,
+            onSuccess: function(array $result) use ($player, $playerName): void {
                 $balance = $result["amount"];
                 foreach ($this->milestones as $milestone) {
                     $amount = $milestone["amount"];
-                    if ($balance >= $amount) {
+                    if ($balance >= $amount && !in_array($amount, $this->completedMilestones[$playerName])) {
                         $this->executeMilestone($player, $milestone);
+                        $this->completedMilestones[$playerName][] = $amount;
                     }
                 }
             },
@@ -56,7 +65,7 @@ class Main extends PluginBase {
         foreach ($milestone["commands"] as $command) {
             $command = str_replace("{player}", $playerName, $command);
             $this->getServer()->dispatchCommand(
-                $this->getServer()->getConsoleSender(), 
+                new CommandSender($this->getServer(), $this->getServer()->getLanguage()), 
                 $command
             );
         }
