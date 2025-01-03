@@ -10,7 +10,7 @@
 
 ## Features
 
-- **Automatic Milestones Detection**: Tracks player balances in real-time using the `PlayerBalanceUpdateEvent`.
+- **Automatic Milestones Detection**: Tracks player balances in real-time.
 - **Customizable Rewards**: Configure rewards through commands and broadcast messages.
 - **Player-Specific Milestoness**: Each player has their unique progress tracking.
 - **Lightweight and Efficient**: Designed to run smoothly without impacting server performance.
