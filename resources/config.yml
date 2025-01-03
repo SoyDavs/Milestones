@@ -1,0 +1,18 @@
+milestones:
+  - amount: 1000000
+    broadcast: "§e{player} has reached §61M coins§e milestone!"
+    commands:
+      - "give {player} diamond 64"
+      - "say Congratulations {player} on reaching 1M coins!"
+
+  - amount: 10000000
+    broadcast: "§e{player} has reached §610M coins§e milestone!"
+    commands:
+      - "give {player} netherite_ingot 32"
+      - "say Amazing achievement {player}! 10M coins reached!"
+
+  - amount: 50000000
+    broadcast: "§e{player} has reached §650M coins§e milestone!"
+    commands:
+      - "give {player} netherite_block 16"
+      - "say Incredible {player}! You've reached 50M coins!"

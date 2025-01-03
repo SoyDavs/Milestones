@@ -1,0 +1,8 @@
+name: Milestone
+version: 1.0.0
+api: 5.0.0
+main: SoyDavs\Milestone\Main
+author: SoyDavs
+description: Custom milestone rewards plugin
+depend: 
+  - BedrockEconomy
